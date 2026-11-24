@@ -50,7 +50,7 @@ Prepare low-resource and imbalanced training datasets from Banking77.
 ### 2. Baseline Models
 Compare:
 - B1: Real training data only.
-- B2: Real training data with class balancing.
+- B2: Real training data with random oversampling of rare classes.
 - B3: Real training data with Easy Data Augmentation (EDA).
 
 ### 3. Synthetic Text Generation
@@ -143,10 +143,21 @@ data (mean ± sample standard deviation). See the [individual B1 results](result
 and [three-seed summary](results/metrics/b1_validation_aggregate.csv). The official
 test set remains reserved for final evaluation.
 
-The default `RUN_B1_REPEATS = True` runs B1 in both settings for seeds 42/43/44,
-reusing completed results. Set it to false to run one selected condition, or set
-`RUN_ALL_BASELINES = True` to run all 18 baseline conditions with the frozen settings.
-Selected seed-42 B1 weights are reused. Checkpoints, validation metrics, predictions, and timing logs
+The default `RUN_B2_REPEATS = True` runs B2 for imbalanced seeds 42/43/44,
+reusing completed results. B2 retains all 1,315 unique real examples and adds 225
+seeded replacement draws, giving 1,540 training entries (20 per class). It uses
+ordinary cross-entropy without class weights. Each run saves `balancing_report.json`
+with class counts and the number of times each source example is used.
+B2 has 97 optimizer batches per epoch, compared with B1's 83 on imbalanced data.
+The same epoch and early-stopping policy therefore permits more training work;
+score comparisons must also report optimizer steps, token counts, and elapsed time.
+
+Balanced low-resource B2 changes no training rows, so it reuses the corresponding
+B1 result as an explicit identity in `balanced_b2_identity.csv`. Set all batch-run
+flags to false for one selected condition. `RUN_ALL_BASELINES = True` covers all
+18 logical baseline conditions with **15 distinct training jobs**: six B1, three
+imbalanced B2, and six B3. Enable only one batch-run flag at a time.
+Checkpoints, validation metrics, predictions, and timing logs
 are saved under `results/baselines/distilbert_validated/`. The original short run
 remains under `distilbert_v1/`. Tuning cost is reported separately, with reused
 training counted once. Official test examples stay reserved for final evaluation.
@@ -160,7 +171,8 @@ training counted once. Official test examples stay reserved for final evaluation
 - [x] Saved prepared datasets to Google Drive.
 - [x] Validate training settings and freeze the shared configuration.
 - [x] Complete B1 in both settings for seeds 42/43/44.
-- [ ] Complete all 18 baseline conditions (all six B1 conditions are ready; B2/B3 remain pending).
+- [ ] Complete the three imbalanced B2 oversampling runs.
+- [ ] Complete the six B3 EDA runs.
 - [ ] Generate synthetic text using Qwen.
 - [ ] Apply synthetic data filtering.
 - [ ] Train DistilBERT models.
