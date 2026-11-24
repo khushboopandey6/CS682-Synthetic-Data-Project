@@ -106,10 +106,9 @@ CS682-Synthetic-Data-Project/
 │   └── drafts/                # Parked, outdated planning drafts
 │
 ├── notebooks/
+│   ├── 01_data_preparation.ipynb
 │   ├── 01_reproducible_data_preparation.ipynb
-│   ├── 02_baseline_models.ipynb
-│   └── archive/
-│       └── 01_data_preparation.ipynb
+│   └── 02_baseline_models.ipynb
 │
 ├── scripts/
 │   └── update_checkpoint_index.py
@@ -126,8 +125,8 @@ CS682-Synthetic-Data-Project/
 ```
 
 Run the two active notebooks in order: `01_reproducible_data_preparation.ipynb`,
-then `02_baseline_models.ipynb`. The original Colab notebook is preserved in
-`notebooks/archive/`. Parked plan documents are under `docs/drafts/`, with a
+then `02_baseline_models.ipynb`. The original Colab notebook is preserved at
+`notebooks/01_data_preparation.ipynb`. Parked plan documents are under `docs/drafts/`, with a
 disclaimer explaining their outdated progress statements.
 
 ### Files in Git and local model storage
