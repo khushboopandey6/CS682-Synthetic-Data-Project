@@ -102,17 +102,76 @@ CS682-Synthetic-Data-Project/
 ├── configs/
 │   └── distilbert_baseline.json
 │
+├── docs/
+│   └── drafts/                # Parked, outdated planning drafts
+│
 ├── notebooks/
-│   ├── 01_data_preparation.ipynb
 │   ├── 01_reproducible_data_preparation.ipynb
-│   └── 02_baseline_models.ipynb
+│   ├── 02_baseline_models.ipynb
+│   └── archive/
+│       └── 01_data_preparation.ipynb
+│
+├── scripts/
+│   └── update_checkpoint_index.py
 │
 ├── data/reproducible/          # Local prepared data and manifests (ignored)
 │
 └── results/
     ├── baselines/             # Local checkpoints and predictions (ignored)
-    └── metrics/               # Small versioned experiment summaries
+    └── metrics/               # Versioned CSV reports and checkpoint index
+        ├── README.md
+        ├── baseline_validation_aggregate.csv
+        ├── baseline_validation_results.csv
+        └── checkpoint_index.csv
 ```
+
+Run the two active notebooks in order: `01_reproducible_data_preparation.ipynb`,
+then `02_baseline_models.ipynb`. The original Colab notebook is preserved in
+`notebooks/archive/`. Parked plan documents are under `docs/drafts/`, with a
+disclaimer explaining their outdated progress statements.
+
+### Files in Git and local model storage
+
+| Location | Committed to Git | Purpose |
+|---|---|---|
+| `notebooks/`, `configs/`, `scripts/` | Yes | Reproducible code and frozen experiment settings. |
+| `results/metrics/` | Yes | Small score tables, comparisons, and the checkpoint index. |
+| `docs/drafts/` | Folder guide only | Parked planning drafts remain local and are marked as outdated. |
+| `data/reproducible/` | No | Prepared datasets, data manifests, and downloaded model caches. |
+| `results/baselines/` | No | Trained weights, EDA text, predictions, histories, and timing logs. |
+
+The 15 main checkpoint folders total approximately **4.03 GB**, or **269 MB each**.
+Their layout is:
+
+```text
+results/baselines/distilbert_validated/<setting>/<baseline>/seed_<seed>/
+├── best_model/
+│   ├── model.safetensors
+│   ├── config.json
+│   ├── tokenizer.json
+│   └── tokenizer_config.json
+├── run_config.json
+├── results.json
+├── history.csv
+├── validation_predictions.csv
+└── ...
+```
+
+Use the [checkpoint index](results/metrics/checkpoint_index.csv) to find each
+model's project-relative path, size, SHA-256 hash, and validation macro-F1.
+The index contains metadata; the weight files remain local and excluded from Git.
+Cloning or switching to this branch does not download trained models. To use a
+model on another machine, copy its entire `best_model/` folder or rerun the
+notebooks. Earlier tuning and development models remain separate under
+`results/baselines/validation_check/` and `results/baselines/distilbert_v1/`.
+
+Refresh the index after training or restoring local checkpoints:
+
+```bash
+python3 scripts/update_checkpoint_index.py
+```
+
+See the [result-file guide](results/metrics/README.md) for the CSV report contents.
 
 ## Current Progress
 
