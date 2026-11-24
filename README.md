@@ -137,28 +137,45 @@ and [trial results](results/metrics/baseline_validation_trials.csv). These are
 seed-42 development results used for configuration selection. Seeds 43/44 use
 the frozen policy without another hyperparameter search.
 
-All six B1 conditions have now completed. Across seeds 42/43/44, validation macro-F1
-is **0.7809 ± 0.0150** for low-resource data and **0.8193 ± 0.0086** for imbalanced
-data (mean ± sample standard deviation). See the [individual B1 results](results/metrics/b1_validation_results.csv)
-and [three-seed summary](results/metrics/b1_validation_aggregate.csv). The official
-test set remains reserved for final evaluation.
+All baseline training is complete on MPS: six B1 fits, three imbalanced B2 fits,
+and six B3 fits. Balanced B2 reuses B1, covering all 18 logical conditions through
+15 distinct training jobs. The official test set remains reserved for final evaluation.
 
-All three imbalanced B2 runs have also completed on MPS using random oversampling.
-The table reports validation means and sample standard deviations across seeds
-42/43/44; it does not report official test performance.
+| Setting | Baseline | Validation macro-F1 | Rare-class F1 | Rare-class recall |
+|---|---|---:|---:|---:|
+| Low-resource | B1: real data | 0.7809 ± 0.0150 | 0.7942 ± 0.0122 | 0.7911 ± 0.0315 |
+| Low-resource | B3: real + EDA | 0.7846 ± 0.0208 | 0.7743 ± 0.0191 | 0.7733 ± 0.0267 |
+| Imbalanced | B1: real data | 0.8193 ± 0.0086 | 0.7297 ± 0.0329 | 0.6644 ± 0.0444 |
+| Imbalanced | B2: oversampling | 0.7968 ± 0.0080 | 0.6755 ± 0.0314 | 0.5911 ± 0.0204 |
+| Imbalanced | B3: real + EDA | 0.8225 ± 0.0044 | 0.7533 ± 0.0283 | 0.6867 ± 0.0240 |
 
-| Imbalanced-data baseline | Macro-F1 | Rare-class F1 | Rare-class recall |
-|---|---:|---:|---:|
-| B1: real data only | 0.8193 ± 0.0086 | 0.7297 ± 0.0329 | 0.6644 ± 0.0444 |
-| B2: random oversampling | 0.7968 ± 0.0080 | 0.6755 ± 0.0314 | 0.5911 ± 0.0204 |
+Values are means ± sample standard deviations across seeds 42/43/44. B3's mean
+macro-F1 increased by 0.37 percentage points on low-resource data and 0.32 points
+on imbalanced data relative to B1. Individual seed outcomes were mixed. B2 scored below B1 for all three imbalanced
+seeds, averaging 2.25 macro-F1 points lower. On imbalanced data, mean rare-class F1 increased by 2.37 points; on low-resource data,
+the same designated class group's F1 decreased. These are validation findings
+under the shared frozen policy; official test evaluation remains pending.
 
-B2 scored below B1 for each seed, with mean macro-F1 lower by 2.25 percentage
-points under this frozen policy. The three B2 jobs took 16.8 minutes of recorded
-local elapsed time. See [individual B2 results](results/metrics/b2_validation_results.csv),
-the [three-seed summary](results/metrics/b2_validation_aggregate.csv), and
+All six EDA runs accepted one edited question per original, with zero shortfalls:
+1,540 training rows per low-resource run and 2,630 per imbalanced run. The six
+completed fits logged 54.2 minutes including their original EDA generation time.
+Launcher startup and restart overhead is recorded separately under
+`results/baselines/distilbert_validated/execution_restarts/`. A runner timeout
+extension reused four completed fits; those fits are counted once.
+
+See the [individual B1 results](results/metrics/b1_validation_results.csv),
+[individual B2 results](results/metrics/b2_validation_results.csv), and
 [paired B1–B2 comparisons](results/metrics/b1_b2_validation_comparison.csv).
-All B1 checkpoints and the frozen configuration were preserved. B1 and B2 are
-complete; the six B3 EDA runs are in progress.
+The three B2 fits logged 16.8 minutes.
+
+See [individual B3 results](results/metrics/b3_validation_results.csv), the
+[B3 summary](results/metrics/b3_validation_aggregate.csv), and
+[paired B1–B3 comparisons](results/metrics/b1_b3_validation_comparison.csv).
+The [complete baseline results](results/metrics/baseline_validation_results.csv)
+and [complete baseline summary](results/metrics/baseline_validation_aggregate.csv)
+cover all 15 distinct fits. Source hashes, augmentation provenance, validation
+predictions/probabilities, per-class metrics, and aggregates passed independent
+checks. B1/B2 artifacts and the frozen configuration were preserved.
 
 The default `RUN_B3_REPEATS = True` runs B3 in both settings for seeds 42/43/44,
 reusing completed results. B3 targets one edited question per original, using
@@ -203,7 +220,7 @@ training counted once. Official test examples stay reserved for final evaluation
 - [x] Validate training settings and freeze the shared configuration.
 - [x] Complete B1 in both settings for seeds 42/43/44.
 - [x] Complete the three imbalanced B2 oversampling runs.
-- [ ] Complete the six B3 EDA runs.
+- [x] Complete the six B3 EDA runs.
 - [ ] Generate synthetic text using Qwen.
 - [ ] Apply synthetic data filtering.
 - [ ] Train DistilBERT models.
