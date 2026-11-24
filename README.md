@@ -158,10 +158,24 @@ local elapsed time. See [individual B2 results](results/metrics/b2_validation_re
 the [three-seed summary](results/metrics/b2_validation_aggregate.csv), and
 [paired B1–B2 comparisons](results/metrics/b1_b2_validation_comparison.csv).
 All B1 checkpoints and the frozen configuration were preserved. B1 and B2 are
-complete; the six B3 EDA runs remain pending.
+complete; the six B3 EDA runs are in progress.
 
-The default `RUN_B2_REPEATS = True` runs B2 for imbalanced seeds 42/43/44,
-reusing completed results. B2 retains all 1,315 unique real examples and adds 225
+The default `RUN_B3_REPEATS = True` runs B3 in both settings for seeds 42/43/44,
+reusing completed results. B3 targets one edited question per original, using
+synonym replacement, synonym insertion, word swaps, or deletion. Edit strength
+and deletion probability are 0.1, with up to 16 attempts per original. Negation
+and numeric tokens are protected; unchanged text and duplicates of selected real
+training or accepted EDA text are rejected. This is EDA with safeguards, rather
+than an exact reproduction of upstream preprocessing. Intended labels can still
+change after an edit. Actual acceptance and per-class shortfalls are recorded.
+
+EDA text and reports are cached under `results/baselines/distilbert_validated/eda/`.
+Each B3 run saves a best checkpoint, validation predictions, per-class metrics,
+and timing logs. Compact B3 and complete baseline summaries are exported to
+`results/metrics/`, together with paired B1–B3 score differences.
+
+To repeat only B2, disable `RUN_B3_REPEATS` and enable `RUN_B2_REPEATS`.
+B2 retains all 1,315 unique real examples and adds 225
 seeded replacement draws, giving 1,540 training entries (20 per class). It uses
 ordinary cross-entropy without class weights. Each run saves `balancing_report.json`
 with class counts and the number of times each source example is used.
