@@ -143,6 +143,23 @@ data (mean ± sample standard deviation). See the [individual B1 results](result
 and [three-seed summary](results/metrics/b1_validation_aggregate.csv). The official
 test set remains reserved for final evaluation.
 
+All three imbalanced B2 runs have also completed on MPS using random oversampling.
+The table reports validation means and sample standard deviations across seeds
+42/43/44; it does not report official test performance.
+
+| Imbalanced-data baseline | Macro-F1 | Rare-class F1 | Rare-class recall |
+|---|---:|---:|---:|
+| B1: real data only | 0.8193 ± 0.0086 | 0.7297 ± 0.0329 | 0.6644 ± 0.0444 |
+| B2: random oversampling | 0.7968 ± 0.0080 | 0.6755 ± 0.0314 | 0.5911 ± 0.0204 |
+
+B2 scored below B1 for each seed, with mean macro-F1 lower by 2.25 percentage
+points under this frozen policy. The three B2 jobs took 16.8 minutes of recorded
+local elapsed time. See [individual B2 results](results/metrics/b2_validation_results.csv),
+the [three-seed summary](results/metrics/b2_validation_aggregate.csv), and
+[paired B1–B2 comparisons](results/metrics/b1_b2_validation_comparison.csv).
+All B1 checkpoints and the frozen configuration were preserved. B1 and B2 are
+complete; the six B3 EDA runs remain pending.
+
 The default `RUN_B2_REPEATS = True` runs B2 for imbalanced seeds 42/43/44,
 reusing completed results. B2 retains all 1,315 unique real examples and adds 225
 seeded replacement draws, giving 1,540 training entries (20 per class). It uses
@@ -171,7 +188,7 @@ training counted once. Official test examples stay reserved for final evaluation
 - [x] Saved prepared datasets to Google Drive.
 - [x] Validate training settings and freeze the shared configuration.
 - [x] Complete B1 in both settings for seeds 42/43/44.
-- [ ] Complete the three imbalanced B2 oversampling runs.
+- [x] Complete the three imbalanced B2 oversampling runs.
 - [ ] Complete the six B3 EDA runs.
 - [ ] Generate synthetic text using Qwen.
 - [ ] Apply synthetic data filtering.

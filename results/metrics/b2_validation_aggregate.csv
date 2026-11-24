@@ -1,0 +1,2 @@
+setting,condition,seeds_completed,macro_f1_mean,macro_f1_std,accuracy_mean,accuracy_std,rare_f1_mean,rare_f1_std,rare_recall_mean,rare_recall_std,total_seconds_mean
+imbalanced,B2,3,0.7967648971550704,0.00798270831269882,0.803896103896104,0.005660907718883965,0.6754672645831916,0.0314365368708691,0.5911111111111111,0.020367003088692534,335.8730754029627
