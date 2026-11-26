@@ -1,5 +1,6 @@
 # Prepared datasets and downloaded model caches
 data/reproducible/
+artifacts/
 
 # Trained weights, augmentation caches, and detailed run artifacts
 results/baselines/

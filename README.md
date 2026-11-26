@@ -1,299 +1,173 @@
-# Does Filtering Help? Cost-Aware LLM-Generated Synthetic Data for Low-Resource and Imbalanced Text Classification
+# Does Filtering Help?
 
-## Project Overview
+Cost-Aware LLM-Generated Synthetic Data for Low-Resource and Imbalanced Text Classification
 
-This project investigates whether filtering Large Language Model (LLM)-generated synthetic text data improves text classification performance when the available real training data is limited or imbalanced.
+COMPSCI 682 — University of Massachusetts Amherst
 
-We use the Banking77 dataset, which contains customer banking queries across 77 intent classes.
+We study whether filtering Qwen-generated banking questions improves DistilBERT
+classification, particularly for rare classes, and whether the gains justify the
+computational cost.
 
-We generate synthetic banking questions using Qwen2.5-1.5B-Instruct and study how different filtering techniques affect classification performance, data quality, diversity, and generation cost.
+## Adopted project protocol
 
-## Research Objectives
+The current team plan is [the master project document](docs/CS682-Master-Project-Document.md).
+All members use [configs/experiment.yaml](configs/experiment.yaml) and the released
+split artifacts. See [data_contracts.md](docs/data_contracts.md) for artifacts and interfaces,
+[experiment_protocol.md](docs/experiment_protocol.md) for execution rules, and
+[literature_review.md](docs/literature_review.md) for the review work outline.
 
-- Investigate the impact of synthetic text augmentation on low-resource text classification.
-- Study whether synthetic data improves classification performance for rare classes.
-- Compare different synthetic data filtering techniques.
-- Evaluate the quality and diversity of generated text.
-- Measure the computational cost of generating and filtering synthetic examples.
+The shared trainer is [src/training.py](src/training.py): one `train_classifier`
+function for B1/B2/B3/F0/F1/F2. Each fit starts from the pinned pretrained model;
+the condition selects its training dataset. Module D owns the common framework.
+The existing baseline trainer is provided here for Module D review and the
+classifier pilot, rather than waiting for a separate implementation.
 
-## Dataset
+- Official experiment seeds: **42, 123, 456**.
+- Fixed validation set: **770** examples; official test: **3,080** examples.
+- Low-resource training: **770** examples, 10 per class.
+- Imbalanced training: **1,315** examples, with 15 fixed classes at 5 examples and
+  the other 62 classes at 20.
+- Classifier: full DistilBERT fine-tuning, float32, automatic **CUDA → MPS → CPU**.
+- Classifier pilot: **12 fits**, covering three rates, B1/B3, and both settings.
+- Learning rate stays unset until that pilot selects one shared value. Main runs
+  are blocked until the reviewed configuration is frozen.
 
-**Banking77**
+## Current status
 
-| Dataset information | Count |
-|---|---:|
-| Intent classes | 77 |
-| Original training examples | 10,003 |
-| Official test examples | 3,080 |
-| Validation examples | 770 |
-| Low-resource training examples | 770 |
-| Imbalanced training examples | 1,315 |
+- [x] Adopted plan and shared configuration recorded.
+- [x] Official JSONL data release prepared and verified locally.
+- [x] All official B2/B3 datasets prepared for the three seeds; EDA shortfalls are zero.
+- [x] Existing training logic extracted into reusable modules for shared-trainer review.
+- [x] Data/baseline checks and a small real CPU training/checkpoint roundtrip passed.
+- [x] Data-only transfer ZIP and integrity inventory prepared locally.
+- [ ] Share the data release and verify the team's shared storage when transferring artifacts.
+- [ ] Run the official 12-fit classifier pilot and freeze the selected rate.
+- [ ] Run the official baseline matrix and publish six B1 checkpoint handoffs.
+- [ ] Complete Qwen generation, filtering, downstream training, and final analysis with the team.
 
-The validation dataset contains 10 real examples from each intent class. The official test dataset is kept separate and untouched.
+The earlier 15 completed baseline fits used a different development protocol.
+They are preserved, but are **not automatically the official results** for this
+new protocol.
 
-### Experimental Settings
+## Run the shared workflow
 
-**1. Low-resource setting**
-- 10 real examples per class.
-- 770 total training examples.
-
-**2. Imbalanced setting**
-- 5 examples for each of 15 rare classes.
-- 20 examples for each of the remaining 62 classes.
-- 1,315 total training examples.
-
-## Methodology
-
-### 1. Data Preparation
-Prepare low-resource and imbalanced training datasets from Banking77.
-
-### 2. Baseline Models
-Compare:
-- B1: Real training data only.
-- B2: Real training data with random oversampling of rare classes.
-- B3: Real training data with Easy Data Augmentation (EDA).
-
-### 3. Synthetic Text Generation
-Use Qwen2.5-1.5B-Instruct to generate new banking questions based on real examples and their intent labels.
-
-### 4. Synthetic Data Filtering
-Compare the following approaches:
-
-- F0: No filtering.
-- F1: Exact and near-duplicate removal.
-- F2: Label agreement using a classifier.
-
-### 5. Text Classification
-Use DistilBERT to train and evaluate the classification models.
-
-### 6. Evaluation
-Compare classification performance, synthetic data quality, diversity, and generation cost.
-
-## Technologies Used
-
-- Python
-- PyTorch
-- Hugging Face Transformers
-- Hugging Face Datasets
-- Qwen2.5-1.5B-Instruct
-- DistilBERT
-- Scikit-learn
-- Sentence Transformers
-- Google Colab (GPU)
-- Google Drive
-- GitHub
-
-## Evaluation Metrics
-
-- Macro-F1 (primary metric)
-- Accuracy
-- Rare-class F1 and recall
-- Synthetic text label correctness
-- Text diversity
-- Cost per 1,000 accepted synthetic examples
-
-## Project Structure
-
-```text
-CS682-Synthetic-Data-Project/
-│
-├── README.md
-├── .gitignore
-├── configs/
-│   └── distilbert_baseline.json
-│
-├── docs/
-│   └── drafts/                # Parked, outdated planning drafts
-│
-├── notebooks/
-│   ├── 01_data_preparation.ipynb
-│   ├── 01_reproducible_data_preparation.ipynb
-│   └── 02_baseline_models.ipynb
-│
-├── scripts/
-│   └── update_checkpoint_index.py
-│
-├── data/reproducible/          # Local prepared data and manifests (ignored)
-│
-└── results/
-    ├── baselines/             # Local checkpoints and predictions (ignored)
-    └── metrics/               # Versioned CSV reports and checkpoint index
-        ├── README.md
-        ├── baseline_validation_aggregate.csv
-        ├── baseline_validation_results.csv
-        └── checkpoint_index.csv
-```
-
-Run the two active notebooks in order: `01_reproducible_data_preparation.ipynb`,
-then `02_baseline_models.ipynb`. The original Colab notebook is preserved at
-`notebooks/01_data_preparation.ipynb`. Parked plan documents are under `docs/drafts/`, with a
-disclaimer explaining their outdated progress statements.
-
-### Files in Git and local model storage
-
-| Location | Committed to Git | Purpose |
-|---|---|---|
-| `notebooks/`, `configs/`, `scripts/` | Yes | Reproducible code and frozen experiment settings. |
-| `results/metrics/` | Yes | Small score tables, comparisons, and the checkpoint index. |
-| `docs/drafts/` | Folder guide only | Parked planning drafts remain local and are marked as outdated. |
-| `data/reproducible/` | No | Prepared datasets, data manifests, and downloaded model caches. |
-| `results/baselines/` | No | Trained weights, EDA text, predictions, histories, and timing logs. |
-
-The 15 main checkpoint folders total approximately **4.03 GB**, or **269 MB each**.
-Their layout is:
-
-```text
-results/baselines/distilbert_validated/<setting>/<baseline>/seed_<seed>/
-├── best_model/
-│   ├── model.safetensors
-│   ├── config.json
-│   ├── tokenizer.json
-│   └── tokenizer_config.json
-├── run_config.json
-├── results.json
-├── history.csv
-├── validation_predictions.csv
-└── ...
-```
-
-Use the [checkpoint index](results/metrics/checkpoint_index.csv) to find each
-model's project-relative path, size, SHA-256 hash, and validation macro-F1.
-The index contains metadata; the weight files remain local and excluded from Git.
-Cloning or switching to this branch does not download trained models. To use a
-model on another machine, copy its entire `best_model/` folder or rerun the
-notebooks. Earlier tuning and development models remain separate under
-`results/baselines/validation_check/` and `results/baselines/distilbert_v1/`.
-
-Refresh the index after training or restoring local checkpoints:
+Install the tested dependencies into the environment selected for this project:
 
 ```bash
-python3 scripts/update_checkpoint_index.py
+python -m pip install -r requirements.txt
 ```
 
-See the [result-file guide](results/metrics/README.md) for the CSV report contents.
+Use these active notebooks in order:
 
-## Current Progress
+1. [01_reproducible_data_preparation.ipynb](notebooks/01_reproducible_data_preparation.ipynb)
+   prepares the pinned source, official splits, B2/B3 datasets, and transfer ZIP.
+2. [02_baseline_models.ipynb](notebooks/02_baseline_models.ipynb) previews or runs
+   the classifier pilot, freezes its winner, and executes official baselines.
 
-Use `notebooks/01_reproducible_data_preparation.ipynb` for the complete data preparation
-workflow: fixed validation, training draws for seeds 42/43/44, official test data,
-source IDs, manifests, and integrity checks. Run all cells in VS Code or Colab; no GPU
-is required. New outputs are saved to `data/reproducible/`. The original notebook and
-existing datasets are preserved and checked for agreement when available.
+Both notebooks support local VS Code execution and Colab setup. On a fresh Colab
+runtime, check the shared Drive path before running. The pinned local versions
+are tested; CUDA execution must be verified on the actual Colab GPU runtime.
 
-Next, run `notebooks/02_baseline_models.ipynb` for DistilBERT B1/B2/B3 baselines.
-It selects CUDA, Apple MPS, or CPU automatically and loads shared settings from
-`configs/distilbert_baseline.json`. The validation check compares learning rates
-`2e-5`, `5e-5`, and `1e-4` on seed 42 in both data settings, with a 30-epoch ceiling
-and early-stopping patience of 5. Selection uses equal-weight mean validation
-macro-F1; learning rates within 0.001 of the highest mean favor the lower rate.
-Set `RUN_VALIDATION_CHECK = True` to reproduce that fixed search; leave it false
-for the remaining experiments. Search reports are saved in `results/metrics/`.
-The completed seed-42 search selected learning rate `1e-4`, with the shared
-30-epoch ceiling and patience of 5. Validation macro-F1 was 0.7728 for low-resource
-data and 0.8234 for imbalanced data. See the [frozen configuration](configs/distilbert_baseline.json)
-and [trial results](results/metrics/baseline_validation_trials.csv). These are
-seed-42 development results used for configuration selection. Seeds 43/44 use
-the frozen policy without another hyperparameter search.
+For an existing local source cache:
 
-All baseline training is complete on MPS: six B1 fits, three imbalanced B2 fits,
-and six B3 fits. Balanced B2 reuses B1, covering all 18 logical conditions through
-15 distinct training jobs. The official test set remains reserved for final evaluation.
+```bash
+python scripts/prepare_official_data.py
+python scripts/prepare_baselines.py
+python scripts/package_data_release.py
+python scripts/run_classifier_pilot.py
+```
 
-| Setting | Baseline | Validation macro-F1 | Rare-class F1 | Rare-class recall |
-|---|---|---:|---:|---:|
-| Low-resource | B1: real data | 0.7809 ± 0.0150 | 0.7942 ± 0.0122 | 0.7911 ± 0.0315 |
-| Low-resource | B3: real + EDA | 0.7846 ± 0.0208 | 0.7743 ± 0.0191 | 0.7733 ± 0.0267 |
-| Imbalanced | B1: real data | 0.8193 ± 0.0086 | 0.7297 ± 0.0329 | 0.6644 ± 0.0444 |
-| Imbalanced | B2: oversampling | 0.7968 ± 0.0080 | 0.6755 ± 0.0314 | 0.5911 ± 0.0204 |
-| Imbalanced | B3: real + EDA | 0.8225 ± 0.0044 | 0.7533 ± 0.0283 | 0.6867 ± 0.0240 |
+The last command previews the 12 fits without training. The user approved local
+execution first and team sharing later. After checking the configured output
+folder, execute the pilot:
 
-Values are means ± sample standard deviations across seeds 42/43/44. B3's mean
-macro-F1 increased by 0.37 percentage points on low-resource data and 0.32 points
-on imbalanced data relative to B1. Individual seed outcomes were mixed. B2 scored below B1 for all three imbalanced
-seeds, averaging 2.25 macro-F1 points lower. On imbalanced data, mean rare-class F1 increased by 2.37 points; on low-resource data,
-the same designated class group's F1 decreased. These are validation findings
-under the shared frozen policy; official test evaluation remains pending.
+```bash
+python scripts/run_classifier_pilot.py --run --base-path /path/to/CS682_Project
+```
 
-All six EDA runs accepted one edited question per original, with zero shortfalls:
-1,540 training rows per low-resource run and 2,630 per imbalanced run. The six
-completed fits logged 54.2 minutes including their original EDA generation time.
-Launcher startup and restart overhead is recorded separately under
-`results/baselines/distilbert_validated/execution_restarts/`. A runner timeout
-extension reused four completed fits; those fits are counted once.
+Review all 12 validation curves, especially fits still improving at the epoch cap.
+Then freeze the selected rate from the verified completed fits:
 
-See the [individual B1 results](results/metrics/b1_validation_results.csv),
-[individual B2 results](results/metrics/b2_validation_results.csv), and
-[paired B1–B2 comparisons](results/metrics/b1_b2_validation_comparison.csv).
-The three B2 fits logged 16.8 minutes.
+```bash
+python scripts/run_classifier_pilot.py --freeze --base-path /path/to/CS682_Project
+```
 
-See [individual B3 results](results/metrics/b3_validation_results.csv), the
-[B3 summary](results/metrics/b3_validation_aggregate.csv), and
-[paired B1–B3 comparisons](results/metrics/b1_b3_validation_comparison.csv).
-The [complete baseline results](results/metrics/baseline_validation_results.csv)
-and [complete baseline summary](results/metrics/baseline_validation_aggregate.csv)
-cover all 15 distinct fits. Source hashes, augmentation provenance, validation
-predictions/probabilities, per-class metrics, and aggregates passed independent
-checks. B1/B2 artifacts and the frozen configuration were preserved.
+Start the first official baseline handoff after the freeze:
 
-The default `RUN_B3_REPEATS = True` runs B3 in both settings for seeds 42/43/44,
-reusing completed results. B3 targets one edited question per original, using
-synonym replacement, synonym insertion, word swaps, or deletion. Edit strength
-and deletion probability are 0.1, with up to 16 attempts per original. Negation
-and numeric tokens are protected; unchanged text and duplicates of selected real
-training or accepted EDA text are rejected. This is EDA with safeguards, rather
-than an exact reproduction of upstream preprocessing. Intended labels can still
-change after an edit. Actual acceptance and per-class shortfalls are recorded.
+```bash
+python scripts/run_baselines.py --run --settings low_resource --seeds 42 --base-path /path/to/CS682_Project
+```
 
-EDA text and reports are cached under `results/baselines/distilbert_validated/eda/`.
-Each B3 run saves a best checkpoint, validation predictions, per-class metrics,
-and timing logs. Compact B3 and complete baseline summaries are exported to
-`results/metrics/`, together with paired B1–B3 score differences.
+Omit `--settings` and `--seeds` to run the full baseline matrix. It contains 18
+logical entries and 15 distinct fits when all three balanced B2 conditions reuse
+B1. Main predictions in this workflow are validation predictions. Official test
+evaluation is reserved for the later reporting phase.
 
-To repeat only B2, disable `RUN_B3_REPEATS` and enable `RUN_B2_REPEATS`.
-B2 retains all 1,315 unique real examples and adds 225
-seeded replacement draws, giving 1,540 training entries (20 per class). It uses
-ordinary cross-entropy without class weights. Each run saves `balancing_report.json`
-with class counts and the number of times each source example is used.
-B2 has 97 optimizer batches per epoch, compared with B1's 83 on imbalanced data.
-The same epoch and early-stopping policy therefore permits more training work;
-score comparisons must also report optimizer steps, token counts, and elapsed time.
+## Repository and artifact layout
 
-Balanced low-resource B2 changes no training rows, so it reuses the corresponding
-B1 result as an explicit identity in `balanced_b2_identity.csv`. Set all batch-run
-flags to false for one selected condition. `RUN_ALL_BASELINES = True` covers all
-18 logical baseline conditions with **15 distinct training jobs**: six B1, three
-imbalanced B2, and six B3. Enable only one batch-run flag at a time.
-Checkpoints, validation metrics, predictions, and timing logs
-are saved under `results/baselines/distilbert_validated/`. The original short run
-remains under `distilbert_v1/`. Tuning cost is reported separately, with reused
-training counted once. Official test examples stay reserved for final evaluation.
+```text
+configs/                         Shared protocol, labels, and rare-class IDs
+  experiment.yaml
+  label_mapping.json
+  rare_classes.json
+docs/
+  CS682-Master-Project-Document.md
+  data_contracts.md
+  experiment_protocol.md
+  literature_review.md
+  drafts/                        Parked older planning drafts; local only
+notebooks/
+  01_data_preparation.ipynb       Preserved original notebook
+  01_reproducible_data_preparation.ipynb
+  02_baseline_models.ipynb
+scripts/                         Data, packaging, pilot, and baseline entry points
+src/                             Shared implementation modules
+tests/                           Focused integrity and training checks
+results/metrics/
+  master_v1/                     Official release manifest and future pilot/core summaries
+  ...                            Earlier development score tables and checkpoint index
+artifacts/CS682_Project/          Local mirror of the shared Drive layout; ignored by Git
+  01_data/
+  04_checkpoints/
+  05_results/
+  06_cost_logs/
+  handoff/
+```
 
-- [x] Downloaded Banking77 dataset.
-- [x] Identified all 77 intent classes.
-- [x] Created the validation dataset.
-- [x] Created the low-resource training dataset.
-- [x] Identified 15 rare classes.
-- [x] Created the imbalanced training dataset.
-- [x] Saved prepared datasets to Google Drive.
-- [x] Validate training settings and freeze the shared configuration.
-- [x] Complete B1 in both settings for seeds 42/43/44.
-- [x] Complete the three imbalanced B2 oversampling runs.
-- [x] Complete the six B3 EDA runs.
-- [ ] Generate synthetic text using Qwen.
-- [ ] Apply synthetic data filtering.
-- [ ] Train DistilBERT models.
-- [ ] Evaluate results and generation cost.
+`--base-path` or `CS682_BASE_PATH` can point to the agreed shared Drive folder.
+The default local mirror is useful for preparation and verification; it does not
+establish shared-folder access. Large datasets, weights, and detailed logs stay
+outside Git. The [data contracts](docs/data_contracts.md) describe the release ZIP
+and model-transfer requirements.
 
-## Project Environment
+## Earlier development results
 
-The notebooks support local VS Code execution with Apple MPS, CUDA, or CPU, and
-Google Colab. Current baseline runs use Apple MPS. Each notebook installs its
-required pinned packages when needed. Large datasets and checkpoints stay outside
-Git; compact validation summaries are versioned under `results/metrics/`.
+These validation results used seeds **42, 43, 44**, the earlier rare-class policy,
+and a B1-only learning-rate search. They remain available as development evidence.
 
-GitHub is used for source code, notebooks, and project documentation.
+| Setting | Method | Validation macro-F1, mean ± sample SD |
+|---|---|---:|
+| Low-resource | B1 real only | 0.7809 ± 0.0150 |
+| Low-resource | B3 real + EDA | 0.7846 ± 0.0208 |
+| Imbalanced | B1 real only | 0.8193 ± 0.0086 |
+| Imbalanced | B2 oversampling | 0.7968 ± 0.0080 |
+| Imbalanced | B3 real + EDA | 0.8225 ± 0.0044 |
 
-## Course
+See the [development result guide](results/metrics/README.md),
+[development summaries](results/metrics/baseline_validation_aggregate.csv), and
+[historical checkpoint index](results/metrics/checkpoint_index.csv). The 15 earlier
+checkpoint folders total approximately 4.03 GB and remain local under
+`results/baselines/distilbert_validated/`. Older tuning checkpoints and the
+[frozen development configuration](configs/distilbert_baseline.json) are preserved.
+No earlier result is silently relabelled as a new seed or protocol.
 
-CS 682 – Neural Networks  
-University of Massachusetts Amherst
+## Verification
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The official source contains seven normalized train/test text overlaps; these
+are disclosed without modifying the benchmark based on test references. All
+real training/validation rows remain separate. Generated-only validation text
+coincidences are recorded as described in the handoff guide.
