@@ -1,0 +1,14 @@
+{
+  "learning_rate": 0.0001,
+  "mean_macro_f1": 0.7981071108956048,
+  "completed_fits": 12,
+  "minimum_macro_f1": 0.7652815521251083,
+  "planned_fits": 12,
+  "selection_metric": "equal-weight mean best validation macro-F1 across B1/B3 and both settings",
+  "tie_policy": "lower learning rate on exact tie",
+  "official_test_used": false,
+  "data_manifest_sha256": "ca50980ffc33a0c071827f31b68e113e9aea250eaefa2382a59b21d38495a11f",
+  "pilot_trials_sha256": "d3e0cd6938d47eade54c340046933f2456b7a2f130ec52f1ccf99953ab465254",
+  "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5"
+}

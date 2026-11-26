@@ -1,173 +1,143 @@
 # Does Filtering Help?
 
 Cost-Aware LLM-Generated Synthetic Data for Low-Resource and Imbalanced Text Classification
-
 COMPSCI 682 — University of Massachusetts Amherst
 
-We study whether filtering Qwen-generated banking questions improves DistilBERT
-classification, particularly for rare classes, and whether the gains justify the
-computational cost.
+The project studies whether filtering Qwen-generated banking queries improves
+DistilBERT intent classification, especially for rare classes, and whether the
+gains justify the computational cost. The [master project document](docs/CS682-Master-Project-Document.md)
+defines the team assignments and experimental design.
 
-## Adopted project protocol
+## Module A status
 
-The current team plan is [the master project document](docs/CS682-Master-Project-Document.md).
-All members use [configs/experiment.yaml](configs/experiment.yaml) and the released
-split artifacts. See [data_contracts.md](docs/data_contracts.md) for artifacts and interfaces,
-[experiment_protocol.md](docs/experiment_protocol.md) for execution rules, and
-[literature_review.md](docs/literature_review.md) for the review work outline.
+**Owner: Dundi Manikanta Ganneni.** Local preparation, baseline training and test
+evaluation are complete. Transfer to the team and Git publication remain pending.
 
-The shared trainer is [src/training.py](src/training.py): one `train_classifier`
-function for B1/B2/B3/F0/F1/F2. Each fit starts from the pinned pretrained model;
-the condition selects its training dataset. Module D owns the common framework.
-The existing baseline trainer is provided here for Module D review and the
-classifier pilot, rather than waiting for a separate implementation.
+| Deliverable | Verified state |
+|---|---|
+| Official real-data splits and B2/B3 datasets | Prepared for seeds 42, 123, 456 |
+| Original learning-rate pilot | 12 fits completed; selected 1e-4 |
+| Main B1/B2/B3 experiments | 18 result entries from 15 independent model fits |
+| B1 models for Module C | All six checkpoints and matching validation exports verified |
+| Test evaluation | 18 verified exports, 3,080 queries each; 15 MPS evaluations and three B2 reuses |
+| Three-seed summaries | Test/validation metrics, rare-class performance and timing complete |
+| Git commit, push and baseline PR | Latest changes pending publication |
+| Drive transfer and receiver verification | Pending |
+| Module D review of the shared trainer | Pending team review |
 
-- Official experiment seeds: **42, 123, 456**.
-- Fixed validation set: **770** examples; official test: **3,080** examples.
-- Low-resource training: **770** examples, 10 per class.
-- Imbalanced training: **1,315** examples, with 15 fixed classes at 5 examples and
-  the other 62 classes at 20.
-- Classifier: full DistilBERT fine-tuning, float32, automatic **CUDA → MPS → CPU**.
-- Classifier pilot: **12 fits**, covering three rates, B1/B3, and both settings.
-- Learning rate stays unset until that pilot selects one shared value. Main runs
-  are blocked until the reviewed configuration is frozen.
+Generation, filtering, F0/F1/F2 training and the combined project analysis belong
+to the other assigned modules. Their completion is not implied by Module A's results.
 
-## Current status
+## Final baseline results
 
-- [x] Adopted plan and shared configuration recorded.
-- [x] Official JSONL data release prepared and verified locally.
-- [x] All official B2/B3 datasets prepared for the three seeds; EDA shortfalls are zero.
-- [x] Existing training logic extracted into reusable modules for shared-trainer review.
-- [x] Data/baseline checks and a small real CPU training/checkpoint roundtrip passed.
-- [x] Data-only transfer ZIP and integrity inventory prepared locally.
-- [ ] Share the data release and verify the team's shared storage when transferring artifacts.
-- [ ] Run the official 12-fit classifier pilot and freeze the selected rate.
-- [ ] Run the official baseline matrix and publish six B1 checkpoint handoffs.
-- [ ] Complete Qwen generation, filtering, downstream training, and final analysis with the team.
+Test macro-F1, **mean ± sample standard deviation across three training seeds**:
 
-The earlier 15 completed baseline fits used a different development protocol.
-They are preserved, but are **not automatically the official results** for this
-new protocol.
+| Setting | B1: real only | B2: oversampling | B3: real + EDA |
+|---|---:|---:|---:|
+| Low-resource | 0.7979 ± 0.0182 | 0.7979 ± 0.0182 | 0.8055 ± 0.0101 |
+| Imbalanced | 0.8206 ± 0.0188 | 0.8143 ± 0.0063 | 0.8232 ± 0.0141 |
 
-## Run the shared workflow
+Balanced B2 exactly reuses B1. These are descriptive three-seed results, not
+claims of statistical significance. The [full summary](results/metrics/master_v1/baseline_summary.md)
+includes accuracy, rare-class F1/recall, validation scores and timing. Completed
+main-fit elapsed time was **103.07 minutes**; test inference took **74.79 seconds**.
+These totals exclude pilots, interrupted attempts and upstream preparation costs.
 
-Install the tested dependencies into the environment selected for this project:
+## Where to find the documentation
 
-```bash
-python -m pip install -r requirements.txt
-```
+- [Experiment protocol](docs/experiment_protocol.md): frozen settings, pilot decisions, run ownership and evaluation rules.
+- [Data contracts and transfer guide](docs/data_contracts.md): dataset counts, schemas, exact artifact paths and recipient checks.
+- [Literature review](docs/literature_review.md): sourced Module A BANKING77/EDA contribution; other modules' review remains pending.
+- [Results guide](results/metrics/README.md): current reports, audits and historical development results.
 
-Use these active notebooks in order:
+## Git and Google Drive
 
-1. [01_reproducible_data_preparation.ipynb](notebooks/01_reproducible_data_preparation.ipynb)
-   prepares the pinned source, official splits, B2/B3 datasets, and transfer ZIP.
-2. [02_baseline_models.ipynb](notebooks/02_baseline_models.ipynb) previews or runs
-   the classifier pilot, freezes its winner, and executes official baselines.
+| Destination | Contents |
+|---|---|
+| Git | Source code, notebooks, requirements, configurations, documentation, small metric tables, manifests and audit/index files |
+| Team Drive: `CS682_Project/` | Released datasets, model checkpoints, detailed predictions/probabilities, histories and runtime logs |
 
-Both notebooks support local VS Code execution and Colab setup. On a fresh Colab
-runtime, check the shared Drive path before running. The pinned local versions
-are tested; CUDA execution must be verified on the actual Colab GPU runtime.
-
-For an existing local source cache:
-
-```bash
-python scripts/prepare_official_data.py
-python scripts/prepare_baselines.py
-python scripts/package_data_release.py
-python scripts/run_classifier_pilot.py
-```
-
-The last command previews the 12 fits without training. The user approved local
-execution first and team sharing later. After checking the configured output
-folder, execute the pilot:
-
-```bash
-python scripts/run_classifier_pilot.py --run --base-path /path/to/CS682_Project
-```
-
-Review all 12 validation curves, especially fits still improving at the epoch cap.
-Then freeze the selected rate from the verified completed fits:
-
-```bash
-python scripts/run_classifier_pilot.py --freeze --base-path /path/to/CS682_Project
-```
-
-Start the first official baseline handoff after the freeze:
-
-```bash
-python scripts/run_baselines.py --run --settings low_resource --seeds 42 --base-path /path/to/CS682_Project
-```
-
-Omit `--settings` and `--seeds` to run the full baseline matrix. It contains 18
-logical entries and 15 distinct fits when all three balanced B2 conditions reuse
-B1. Main predictions in this workflow are validation predictions. Official test
-evaluation is reserved for the later reporting phase.
-
-## Repository and artifact layout
+The local artifact root is `artifacts/CS682_Project/`, excluded from Git. Keep
+its relative folder structure when transferring to Drive. The actual shared
+Drive path/link and recipient access still need to be confirmed. Existing local
+ZIPs are optional convenience snapshots; they are not the authoritative handoff
+and do not need refreshing for the Git-and-Drive workflow.
 
 ```text
-configs/                         Shared protocol, labels, and rare-class IDs
-  experiment.yaml
-  label_mapping.json
-  rare_classes.json
-docs/
-  CS682-Master-Project-Document.md
-  data_contracts.md
-  experiment_protocol.md
-  literature_review.md
-  drafts/                        Parked older planning drafts; local only
-notebooks/
-  01_data_preparation.ipynb       Preserved original notebook
-  01_reproducible_data_preparation.ipynb
-  02_baseline_models.ipynb
-scripts/                         Data, packaging, pilot, and baseline entry points
-src/                             Shared implementation modules
-tests/                           Focused integrity and training checks
-results/metrics/
-  master_v1/                     Official release manifest and future pilot/core summaries
-  ...                            Earlier development score tables and checkpoint index
-artifacts/CS682_Project/          Local mirror of the shared Drive layout; ignored by Git
-  01_data/
-  04_checkpoints/
-  05_results/
-  06_cost_logs/
-  handoff/
+configs/experiment.yaml                Shared frozen configuration
+notebooks/01_data_preparation.ipynb     Preserved original notebook
+notebooks/01_reproducible_data_preparation.ipynb
+notebooks/02_baseline_models.ipynb
+src/                                  Shared data, baseline, training and inference code
+scripts/                              Execution, verification and summary entry points
+results/metrics/master_v1/             Current small reports and metadata for Git
+artifacts/CS682_Project/               Local source of files to transfer to Drive
+  01_data/                            Official splits and prepared B2/B3 datasets
+  04_checkpoints/B1/                  Six required teacher-model folders
+  04_checkpoints/B2/                  Three imbalanced oversampling models
+  04_checkpoints/B3/                  Six EDA models
+  05_results/                        Detailed predictions, probabilities and metrics
+  06_cost_logs/                      Training and test-inference logs
+  handoff/                           Frozen config copy and artifact inventories
 ```
 
-`--base-path` or `CS682_BASE_PATH` can point to the agreed shared Drive folder.
-The default local mirror is useful for preparation and verification; it does not
-establish shared-folder access. Large datasets, weights, and detailed logs stay
-outside Git. The [data contracts](docs/data_contracts.md) describe the release ZIP
-and model-transfer requirements.
+## Shared settings and hardware
 
-## Earlier development results
+Everyone should load [configs/experiment.yaml](configs/experiment.yaml) and the
+released split files. The retained policy uses **1e-4, maximum 30 epochs, patience
+5**, full DistilBERT fine-tuning, batch size 16 and float32. Gnaneswarudu owns
+Module D's common framework; [src/training.py](src/training.py) provides the tested
+shared-trainer candidate used by these baselines. Team review is still pending.
 
-These validation results used seeds **42, 43, 44**, the earlier rare-class policy,
-and a B1-only learning-rate search. They remain available as development evidence.
+The general trainer supports CUDA → MPS → CPU. For this local work, further
+CPU model execution was explicitly stopped; the resume wrapper requires MPS.
+Low-resource seed-42 B1/B3 were completed on CPU and retained. The other 13 main
+fits and all test evaluations used MPS. Actual hardware is recorded per run.
+Colab setup is supported, but an actual CUDA execution check has not been completed.
 
-| Setting | Method | Validation macro-F1, mean ± sample SD |
-|---|---|---:|
-| Low-resource | B1 real only | 0.7809 ± 0.0150 |
-| Low-resource | B3 real + EDA | 0.7846 ± 0.0208 |
-| Imbalanced | B1 real only | 0.8193 ± 0.0086 |
-| Imbalanced | B2 oversampling | 0.7968 ± 0.0080 |
-| Imbalanced | B3 real + EDA | 0.8225 ± 0.0044 |
+## Reproduce or verify
 
-See the [development result guide](results/metrics/README.md),
-[development summaries](results/metrics/baseline_validation_aggregate.csv), and
-[historical checkpoint index](results/metrics/checkpoint_index.csv). The 15 earlier
-checkpoint folders total approximately 4.03 GB and remain local under
-`results/baselines/distilbert_validated/`. Older tuning checkpoints and the
-[frozen development configuration](configs/distilbert_baseline.json) are preserved.
-No earlier result is silently relabelled as a new seed or protocol.
+Install [requirements.txt](requirements.txt) in the chosen Python environment.
+Restore the released Drive artifacts at the configured base path. Do not
+independently resample training subsets or create another label mapping.
 
-## Verification
+From the project root, these commands preview plans without training or inference:
 
 ```bash
+python scripts/run_classifier_pilot.py
+python scripts/run_baselines.py
+python scripts/evaluate_baselines.py
+```
+
+The main runs are already complete. The local convenience command below requires
+MPS and reuses matching completed fits; an interrupted fit restarts from its seed:
+
+```bash
+bash scripts/resume_baselines_mps.sh
+```
+
+That wrapper defaults to the existing local Python environment. Set
+`CS682_PYTHON` to another installed project environment if needed. Generic Python
+entry points use automatic device selection; check the device before execution.
+
+Refresh metadata or summaries without retraining:
+
+```bash
+python scripts/package_data_release.py --verify-only
+python scripts/export_baseline_handoff.py
+python scripts/summarize_baselines.py
 python -m unittest discover -s tests -v
 ```
 
-The official source contains seven normalized train/test text overlaps; these
-are disclosed without modifying the benchmark based on test references. All
-real training/validation rows remain separate. Generated-only validation text
-coincidences are recorded as described in the handoff guide.
+The CLI `--run` flags explicitly execute training or inference. Test evaluation
+loads saved main checkpoints and uses the test split for reporting only; test
+scores must never guide subsequent training, generation or filtering choices.
+
+## Historical artifacts
+
+Earlier development results used seeds **42, 43, 44**, a different rare-class
+policy and a B1-only tuning search. They remain under the older metric paths and
+`results/baselines/distilbert_validated/`. They are separate from `master_v1`.
+The original notebook and old local datasets/checkpoints are retained. The
+[data contracts](docs/data_contracts.md) document known source overlaps and the
+recorded EDA/validation coincidence.
