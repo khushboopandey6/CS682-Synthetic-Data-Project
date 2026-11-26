@@ -1,0 +1,555 @@
+{
+  "schema_version": 1,
+  "protocol_id": "master_v1",
+  "status": "complete",
+  "expected_runs": 6,
+  "completed_runs": 6,
+  "missing_runs": [],
+  "configuration_file": "frozen_experiment.yaml",
+  "configuration_file_sha256": "e5e69a67dd9f5d151b01aa4a569f90bd161fbec8908c0a318916539bf1f00ede",
+  "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+  "data_manifest": {
+    "path": "01_data/manifest.json",
+    "bytes": 232632,
+    "sha256": "ca50980ffc33a0c071827f31b68e113e9aea250eaefa2382a59b21d38495a11f"
+  },
+  "metadata_files": [
+    {
+      "path": "01_data/label_mapping.json",
+      "bytes": 2489,
+      "sha256": "18ad9bf3e9e9755c1d7b14e1f74b6235c4d29b7e2ab972d277a57a12cbd0516f"
+    },
+    {
+      "path": "01_data/rare_classes.json",
+      "bytes": 1266,
+      "sha256": "0ea2b0f4207095287c2671bd99ecc9db6999dac3861b10d5673abf7949c68541"
+    }
+  ],
+  "validation_data": {
+    "path": "01_data/validation.jsonl",
+    "bytes": 78237,
+    "sha256": "fab71ace2b9d248aec5cb50e4296d6bf20b237332e3e6577d61f46da2f3b67c2"
+  },
+  "training_data": [
+    {
+      "path": "01_data/low_resource/seed_42.jsonl",
+      "bytes": 80436,
+      "sha256": "e1de01f20f61f20116a72539a4555e8a9c6453494fdb57c2942ecbd50e0a9c4a"
+    },
+    {
+      "path": "01_data/low_resource/seed_123.jsonl",
+      "bytes": 80495,
+      "sha256": "6314bd42ab01f5344d171808cdff6183399788776840160a566b792f6f759891"
+    },
+    {
+      "path": "01_data/low_resource/seed_456.jsonl",
+      "bytes": 78238,
+      "sha256": "3ddfb4819704394f688cd3d4a8dd5f6e3271b474b50bdbb15bb2a6b58fbb7572"
+    },
+    {
+      "path": "01_data/imbalanced/seed_42.jsonl",
+      "bytes": 135859,
+      "sha256": "d4883c0203ce787684c16338d4128126db4427cd65b7e6601efca875ca80cdff"
+    },
+    {
+      "path": "01_data/imbalanced/seed_123.jsonl",
+      "bytes": 134962,
+      "sha256": "d0cc4b22a96cebf74ba1c4ec75e94aabe8931abc51c93569fcaf8eeb7ebc52f3"
+    },
+    {
+      "path": "01_data/imbalanced/seed_456.jsonl",
+      "bytes": 134609,
+      "sha256": "86aade5a19c373d32e21d7923b98e2af90e39427bc83392138e6a22c49b596c9"
+    }
+  ],
+  "checkpoints": [
+    {
+      "run_id": "B1_low_resource_seed_42",
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 42,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/low_resource/seed_42/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.7709643011584681,
+        "accuracy": 0.7675324675324675,
+        "rare_macro_f1": 0.7467383549580345,
+        "rare_macro_recall": 0.7866666666666667
+      },
+      "best_epoch": 7,
+      "epochs_run": 12,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/run_config.json",
+          "bytes": 4424,
+          "sha256": "5827b69a42d067f546edfbfbaf14e6f89056f6dd608337b84ffa32659a9f5cc9"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/results.json",
+          "bytes": 2140,
+          "sha256": "4e953b89de28db90c2a04857353b04df2c2728526aeb74c6eb0a3bc61f43dd0b"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/runtime.json",
+          "bytes": 262,
+          "sha256": "74b812fb8e0d6bad15288da9d7799493fb15b13524a7e05e838b0d75a682f813"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/history.csv",
+          "bytes": 2305,
+          "sha256": "3c02c57c72524a74fd7c42ba23ac972bd35b9c4154215275645de8cc9a4491ba"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/stage_log.csv",
+          "bytes": 6547,
+          "sha256": "d952f797a726394ef9981822d98f18099e4f59c0fabb34938c3c259cd067b1d9"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/per_class_metrics.csv",
+          "bytes": 4957,
+          "sha256": "29da4c1aa1b79ed405614cb99aced2b11ea1dbce4063466e0cbcd710ae089130"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/validation_predictions.jsonl",
+          "bytes": 188267,
+          "sha256": "d8ef80e201472a2be9574713378c58a57496e775f9bb609519f2f89a4eab5d88"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/validation_probabilities.npz",
+          "bytes": 220547,
+          "sha256": "f8245627aaee4adbc9ceef807cceba0f5423b549a51be5c652938b618e1989e4"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "56b6c1662f0ddd13e234fc6810af1b1f665c3e2a7d2f5578fc378d95aac2a8b7"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_42/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    },
+    {
+      "run_id": "B1_low_resource_seed_123",
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 123,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/low_resource/seed_123/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.7858049600686389,
+        "accuracy": 0.787012987012987,
+        "rare_macro_f1": 0.7180854244940932,
+        "rare_macro_recall": 0.7266666666666667
+      },
+      "best_epoch": 19,
+      "epochs_run": 24,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/run_config.json",
+          "bytes": 4425,
+          "sha256": "adf0b0976a4182090907e1ed54052efe3aa2d331b223051216f46c0c5e61411f"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/results.json",
+          "bytes": 2148,
+          "sha256": "33b0c2842e8a27271f2869e39c0bab46c62ca92820e8856f970f840d72315486"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/runtime.json",
+          "bytes": 267,
+          "sha256": "5feec1063c35b118ce3e68f97df096d028acfa0453814766ef6dd2d4ac900c83"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/history.csv",
+          "bytes": 4486,
+          "sha256": "6a32787435778fb3ee929732b10e0d77d7427579d0aa2ab245ee8b15f0b5256b"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/stage_log.csv",
+          "bytes": 13643,
+          "sha256": "fcc12f31579752148f3fd9c727868ba9f08224c3abdbdf3be02778ffb37e6568"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/per_class_metrics.csv",
+          "bytes": 5185,
+          "sha256": "5c76a378c37fa0a4e184f1b93a723e633d06c7c6e4f94840b97e5bc46f8bc3d6"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/validation_predictions.jsonl",
+          "bytes": 188948,
+          "sha256": "2dae632b0878d63b8556d15426ee0f29cfbc9604aabe2f95530ef7e0663eacf3"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/validation_probabilities.npz",
+          "bytes": 223247,
+          "sha256": "a8b48a6737f44d3d229f2c36952e116db74446684cb734fc3b70ffb55673eb8e"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "04cfd2c27a2cfff428fa184532cb0dee7830b94deb41557506241c31ce7be4ed"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_123/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    },
+    {
+      "run_id": "B1_low_resource_seed_456",
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 456,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/low_resource/seed_456/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.803703539370922,
+        "accuracy": 0.8064935064935065,
+        "rare_macro_f1": 0.8149964360382991,
+        "rare_macro_recall": 0.8200000000000001
+      },
+      "best_epoch": 17,
+      "epochs_run": 22,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/run_config.json",
+          "bytes": 4425,
+          "sha256": "3e153e64e8c878d6bb9f8c5e6aeec734b881759733a9d3f591af8c98c80506d0"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/results.json",
+          "bytes": 2149,
+          "sha256": "206a8059f595a524d6a5e37fe6211db75d7182eac78bbfbaf12bef7d840d1349"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/runtime.json",
+          "bytes": 267,
+          "sha256": "5feec1063c35b118ce3e68f97df096d028acfa0453814766ef6dd2d4ac900c83"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/history.csv",
+          "bytes": 4054,
+          "sha256": "77d59b3e5ee93c2b322f0d0103d8f05f915c94aef50f7ebca399d9726892d46e"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/stage_log.csv",
+          "bytes": 12521,
+          "sha256": "f0624a78c3e0a786eb95e1870b5fc58f38e0067505c6d53d1eef36ba2ba2c2c9"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/per_class_metrics.csv",
+          "bytes": 5132,
+          "sha256": "c134a1e47d024c2679097a8fcafb2b7b2a8ed4bd3c58c4824af3ff82d93c99b2"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/validation_predictions.jsonl",
+          "bytes": 188930,
+          "sha256": "84ae3a70d0b418d300bcb370cc7c06255eb4054612a3e15d80187d9e52cd6d74"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/validation_probabilities.npz",
+          "bytes": 223388,
+          "sha256": "0670717516e5be7f8dc302c09cb3f3559ceaa58d9d54de317d980b20c3a874f9"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "43bb4ff8b1b9799f985c57d9d8829f5ce8c810d79512ed6f2b3284a9e89d1fe7"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/low_resource/seed_456/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    },
+    {
+      "run_id": "B1_imbalanced_seed_42",
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 42,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/imbalanced/seed_42/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.8199919960351839,
+        "accuracy": 0.8233766233766234,
+        "rare_macro_f1": 0.7490758983019047,
+        "rare_macro_recall": 0.6533333333333332
+      },
+      "best_epoch": 18,
+      "epochs_run": 23,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/run_config.json",
+          "bytes": 4422,
+          "sha256": "262773f3d2d1699ebbbd05a1c5d71c44c1492e835ad486ac0327e36fa8267bf7"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/results.json",
+          "bytes": 2145,
+          "sha256": "e616ab2e8bc18ff9e2512a47fd60ee2f00d996167fc486a19725660e648f29c3"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/runtime.json",
+          "bytes": 267,
+          "sha256": "5feec1063c35b118ce3e68f97df096d028acfa0453814766ef6dd2d4ac900c83"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/history.csv",
+          "bytes": 4234,
+          "sha256": "dc572943fcb6cbfd3dacdfefdf9cc03893b78c4e1a67f4d93134830466081c80"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/stage_log.csv",
+          "bytes": 12973,
+          "sha256": "3e7e69f6df19cd69997b8a67fb8e2d7f501fe465056c075d284335c37b985cca"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/per_class_metrics.csv",
+          "bytes": 4987,
+          "sha256": "ebbc4d65c2b206654380c7fb47072c2bf56e1c2886cb1bdeb7713b415c3cf39d"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/validation_predictions.jsonl",
+          "bytes": 186631,
+          "sha256": "774513f14ff3a46b3deb959529dd828f6c69769a516454e31645a73869f75514"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/validation_probabilities.npz",
+          "bytes": 223948,
+          "sha256": "67d2ac09980a57b02bfd3b8774d94950c55b5e6c8c27d4755014849c68909389"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "15d91f6ff474c0e539b35190275056ec1b66171a84c2343a9a4c8308529001fa"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_42/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    },
+    {
+      "run_id": "B1_imbalanced_seed_123",
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 123,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/imbalanced/seed_123/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.8069780898268065,
+        "accuracy": 0.8090909090909091,
+        "rare_macro_f1": 0.6835925650355589,
+        "rare_macro_recall": 0.6266666666666666
+      },
+      "best_epoch": 9,
+      "epochs_run": 14,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/run_config.json",
+          "bytes": 4423,
+          "sha256": "36306e181ab014ccfed9ec581553121f5cf34454d3570f6a14d1ebb3aec774e6"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/results.json",
+          "bytes": 2148,
+          "sha256": "e265e0e64fc979e8ffe65608535d7b19d63d4e3636cd4ad31e98638e70f9cc41"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/runtime.json",
+          "bytes": 267,
+          "sha256": "5feec1063c35b118ce3e68f97df096d028acfa0453814766ef6dd2d4ac900c83"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/history.csv",
+          "bytes": 2583,
+          "sha256": "0c577d17a812e79e550621800e890c0f6d7e677ca91780b44995b1048a3f90fb"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/stage_log.csv",
+          "bytes": 8108,
+          "sha256": "d0d00bc9a56b676264b0315462aa2965b2ae9666af120b47c52638412fd2b075"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/per_class_metrics.csv",
+          "bytes": 5053,
+          "sha256": "f9ca25dc2645c41ea8ed902025c089185bc8030e85b43957c8566e652789381d"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/validation_predictions.jsonl",
+          "bytes": 187409,
+          "sha256": "a75797fe3141c955d712e38a2e32af5c4c49e375b7531e03fb10d9bab13afda6"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/validation_probabilities.npz",
+          "bytes": 222978,
+          "sha256": "451ab923ef4ea843781ee72ba0bad380eb0baa27095c690c12ebb0bb9402696d"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "814701de41c513b2255272e1cf1b22a9ed759d9357012d1407a1afdd41ed7c94"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_123/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    },
+    {
+      "run_id": "B1_imbalanced_seed_456",
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 456,
+      "status": "verified",
+      "model_directory": "04_checkpoints/B1/imbalanced/seed_456/best_model",
+      "code_commit": "62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5",
+      "trainer_source_sha256": "89ea76e7c48b30028e82d54892abb21d9277df218a036619d706a000583925f6",
+      "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "metrics": {
+        "macro_f1": 0.8199102034154242,
+        "accuracy": 0.825974025974026,
+        "rare_macro_f1": 0.7021077472006265,
+        "rare_macro_recall": 0.6133333333333333
+      },
+      "best_epoch": 13,
+      "epochs_run": 18,
+      "files": [
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/run_config.json",
+          "bytes": 4423,
+          "sha256": "a7a555ec275750178ab6caed24eff2c81065b421abc60b07c6203056d7f1602f"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/results.json",
+          "bytes": 2147,
+          "sha256": "f1071801dc72363cf39250d84a5f7b5a2ad32539c0787176d3ae8e7a54a46e7f"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/runtime.json",
+          "bytes": 267,
+          "sha256": "5feec1063c35b118ce3e68f97df096d028acfa0453814766ef6dd2d4ac900c83"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/history.csv",
+          "bytes": 3273,
+          "sha256": "88cf15b1a93a04724cd52322607c243e0fa46a043e8e12eeb4eec757e713a501"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/stage_log.csv",
+          "bytes": 10293,
+          "sha256": "70498cd808060a603d3fdacc4295239e8489b5fca44fecb95da50805132f6ea3"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/per_class_metrics.csv",
+          "bytes": 5006,
+          "sha256": "0093bceabe3b1fae58268198e0715ed3fce025b115cc2d5347e61910455c2a95"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/validation_predictions.jsonl",
+          "bytes": 187384,
+          "sha256": "a8cd1178e6bb59abc5872a4c18a26acd3ddfa044bd3122d49460ecb265330b42"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/validation_probabilities.npz",
+          "bytes": 223488,
+          "sha256": "7fa5bd6c468fce432080b2126abab115cab7fa2d49586784c7a59877a73e8a9e"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/best_model/config.json",
+          "bytes": 5759,
+          "sha256": "d33270f3fca8e60e25f2bb138ccf6b99aef47e7cf7096abd97b043020727339a"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/best_model/model.safetensors",
+          "bytes": 268063276,
+          "sha256": "5d1b9d20cf2807e54da8f726586793c3468975aa2616bf8771d05d2360079490"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/best_model/tokenizer.json",
+          "bytes": 711494,
+          "sha256": "79ea220416a57ca8acdf069d71875d5d2ddadef66021aeb6c120a7c546c04344"
+        },
+        {
+          "path": "04_checkpoints/B1/imbalanced/seed_456/best_model/tokenizer_config.json",
+          "bytes": 350,
+          "sha256": "8b54ad532ba293be69643d90fbdaa7f440e593d7f1798f83d750adaa9a1cd934"
+        }
+      ]
+    }
+  ],
+  "path_base": "CS682_Project",
+  "contents": "Verified B1 artifacts only; paths are relative to the project output folder. No weights are copied."
+}

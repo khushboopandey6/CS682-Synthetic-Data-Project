@@ -1,0 +1,196 @@
+{
+  "status": "complete",
+  "verified_entries": 18,
+  "unique_model_inferences": 15,
+  "balanced_B2_reuses": 3,
+  "test_rows_per_entry": 3080,
+  "probability_shape": [
+    3080,
+    77
+  ],
+  "inference_device": "mps",
+  "model_weights_and_frozen_config_unchanged": true,
+  "test_used_for_selection": false,
+  "entries": [
+    {
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 42,
+      "macro_f1": 0.7782041666584935,
+      "accuracy": 0.7775974025974026,
+      "rare_class_f1": 0.7324092796428843,
+      "rare_class_recall": 0.7583333333333333,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "low_resource",
+      "seed": 42,
+      "macro_f1": 0.7782041666584935,
+      "accuracy": 0.7775974025974026,
+      "rare_class_f1": 0.7324092796428843,
+      "rare_class_recall": 0.7583333333333333,
+      "inference_reused": true
+    },
+    {
+      "condition": "B3",
+      "setting": "low_resource",
+      "seed": 42,
+      "macro_f1": 0.7966840042130333,
+      "accuracy": 0.7977272727272727,
+      "rare_class_f1": 0.7722786070380872,
+      "rare_class_recall": 0.81,
+      "inference_reused": false
+    },
+    {
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 123,
+      "macro_f1": 0.8013401033138059,
+      "accuracy": 0.801948051948052,
+      "rare_class_f1": 0.7346688051907025,
+      "rare_class_recall": 0.7233333333333333,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "low_resource",
+      "seed": 123,
+      "macro_f1": 0.8013401033138059,
+      "accuracy": 0.801948051948052,
+      "rare_class_f1": 0.7346688051907025,
+      "rare_class_recall": 0.7233333333333333,
+      "inference_reused": true
+    },
+    {
+      "condition": "B3",
+      "setting": "low_resource",
+      "seed": 123,
+      "macro_f1": 0.8032174682623309,
+      "accuracy": 0.8045454545454546,
+      "rare_class_f1": 0.7315536151133947,
+      "rare_class_recall": 0.7200000000000001,
+      "inference_reused": false
+    },
+    {
+      "condition": "B1",
+      "setting": "low_resource",
+      "seed": 456,
+      "macro_f1": 0.8140118164170138,
+      "accuracy": 0.813961038961039,
+      "rare_class_f1": 0.8157690274561985,
+      "rare_class_recall": 0.8116666666666666,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "low_resource",
+      "seed": 456,
+      "macro_f1": 0.8140118164170138,
+      "accuracy": 0.813961038961039,
+      "rare_class_f1": 0.8157690274561985,
+      "rare_class_recall": 0.8116666666666666,
+      "inference_reused": true
+    },
+    {
+      "condition": "B3",
+      "setting": "low_resource",
+      "seed": 456,
+      "macro_f1": 0.8164945037608979,
+      "accuracy": 0.8168831168831169,
+      "rare_class_f1": 0.8065100653063804,
+      "rare_class_recall": 0.7999999999999999,
+      "inference_reused": false
+    },
+    {
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 42,
+      "macro_f1": 0.8395226437829588,
+      "accuracy": 0.8415584415584415,
+      "rare_class_f1": 0.7601935585290861,
+      "rare_class_recall": 0.6733333333333335,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "imbalanced",
+      "seed": 42,
+      "macro_f1": 0.8203376688582663,
+      "accuracy": 0.8237012987012987,
+      "rare_class_f1": 0.7131182746296697,
+      "rare_class_recall": 0.6050000000000001,
+      "inference_reused": false
+    },
+    {
+      "condition": "B3",
+      "setting": "imbalanced",
+      "seed": 42,
+      "macro_f1": 0.8393307663332783,
+      "accuracy": 0.8415584415584415,
+      "rare_class_f1": 0.7476457103366746,
+      "rare_class_recall": 0.6466666666666667,
+      "inference_reused": false
+    },
+    {
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 123,
+      "macro_f1": 0.8018817540657224,
+      "accuracy": 0.8055194805194805,
+      "rare_class_f1": 0.6469388226796047,
+      "rare_class_recall": 0.5849999999999999,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "imbalanced",
+      "seed": 123,
+      "macro_f1": 0.8078339691503345,
+      "accuracy": 0.8159090909090909,
+      "rare_class_f1": 0.6311320589017272,
+      "rare_class_recall": 0.5283333333333332,
+      "inference_reused": false
+    },
+    {
+      "condition": "B3",
+      "setting": "imbalanced",
+      "seed": 123,
+      "macro_f1": 0.8132182614480684,
+      "accuracy": 0.8201298701298702,
+      "rare_class_f1": 0.6550250194582732,
+      "rare_class_recall": 0.5533333333333333,
+      "inference_reused": false
+    },
+    {
+      "condition": "B1",
+      "setting": "imbalanced",
+      "seed": 456,
+      "macro_f1": 0.8204375753565604,
+      "accuracy": 0.8256493506493506,
+      "rare_class_f1": 0.6885458508977931,
+      "rare_class_recall": 0.5933333333333333,
+      "inference_reused": false
+    },
+    {
+      "condition": "B2",
+      "setting": "imbalanced",
+      "seed": 456,
+      "macro_f1": 0.8146790693361602,
+      "accuracy": 0.8207792207792208,
+      "rare_class_f1": 0.6662400586583074,
+      "rare_class_recall": 0.5466666666666666,
+      "inference_reused": false
+    },
+    {
+      "condition": "B3",
+      "setting": "imbalanced",
+      "seed": 456,
+      "macro_f1": 0.8171136146240806,
+      "accuracy": 0.8207792207792208,
+      "rare_class_f1": 0.7059679069180445,
+      "rare_class_recall": 0.5983333333333333,
+      "inference_reused": false
+    }
+  ]
+}

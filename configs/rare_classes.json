@@ -1,0 +1,83 @@
+{
+  "selection_seed": 42,
+  "selection_algorithm": "python_random_sample_sorted_label_ids",
+  "rare_class_ids": [
+    14,
+    3,
+    35,
+    31,
+    28,
+    17,
+    13,
+    69,
+    11,
+    54,
+    4,
+    75,
+    68,
+    27,
+    76
+  ],
+  "classes": [
+    {
+      "id": 14,
+      "name": "card_not_working"
+    },
+    {
+      "id": 3,
+      "name": "atm_support"
+    },
+    {
+      "id": 35,
+      "name": "failed_transfer"
+    },
+    {
+      "id": 31,
+      "name": "exchange_charge"
+    },
+    {
+      "id": 28,
+      "name": "direct_debit_payment_not_recognised"
+    },
+    {
+      "id": 17,
+      "name": "card_payment_wrong_exchange_rate"
+    },
+    {
+      "id": 13,
+      "name": "card_linking"
+    },
+    {
+      "id": 69,
+      "name": "verify_my_identity"
+    },
+    {
+      "id": 11,
+      "name": "card_arrival"
+    },
+    {
+      "id": 54,
+      "name": "supported_cards_and_currencies"
+    },
+    {
+      "id": 4,
+      "name": "automatic_top_up"
+    },
+    {
+      "id": 75,
+      "name": "wrong_amount_of_cash_received"
+    },
+    {
+      "id": 68,
+      "name": "unable_to_verify_identity"
+    },
+    {
+      "id": 27,
+      "name": "declined_transfer"
+    },
+    {
+      "id": 76,
+      "name": "wrong_exchange_rate_for_cash_withdrawal"
+    }
+  ]
+}

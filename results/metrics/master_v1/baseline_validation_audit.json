@@ -1,0 +1,172 @@
+{
+  "status": "complete",
+  "verified_entries": 18,
+  "distinct_fits": 15,
+  "official_test_used": false,
+  "frozen_config_sha256": "e5e69a67dd9f5d151b01aa4a569f90bd161fbec8908c0a318916539bf1f00ede",
+  "checks": "Released data and policy bindings; predictions/probabilities; metrics; checkpoints; epochs; scheduler; optimizer steps; balanced B2 reuse",
+  "entries": [
+    {
+      "setting": "low_resource",
+      "seed": 42,
+      "condition": "B1",
+      "device": "cpu",
+      "macro_f1": 0.7709643011584681,
+      "training_reused": false,
+      "fingerprint": "e79714b19da5aa1509596f2924688c081f7c85a549685fd5f169508f02782045"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 42,
+      "condition": "B2",
+      "device": "cpu",
+      "macro_f1": 0.7709643011584681,
+      "training_reused": true,
+      "fingerprint": "e79714b19da5aa1509596f2924688c081f7c85a549685fd5f169508f02782045"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 42,
+      "condition": "B3",
+      "device": "cpu",
+      "macro_f1": 0.7697187207340991,
+      "training_reused": false,
+      "fingerprint": "e2d94e35402df8f1cd7be0084b4bcfe3477ccf6082aacc53e50a27aabb1a5f67"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 123,
+      "condition": "B1",
+      "device": "mps",
+      "macro_f1": 0.7858049600686389,
+      "training_reused": false,
+      "fingerprint": "a29611063bbfe89b307b4a58080bcbe16618b9a7bea095feb56817face02d3ce"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 123,
+      "condition": "B2",
+      "device": "mps",
+      "macro_f1": 0.7858049600686389,
+      "training_reused": true,
+      "fingerprint": "a29611063bbfe89b307b4a58080bcbe16618b9a7bea095feb56817face02d3ce"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 123,
+      "condition": "B3",
+      "device": "mps",
+      "macro_f1": 0.8039278058774486,
+      "training_reused": false,
+      "fingerprint": "32ed2dd5a11a24ac410ebd262cdad8f5373fe10fb82099287f4537c3cf4beb01"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 456,
+      "condition": "B1",
+      "device": "mps",
+      "macro_f1": 0.803703539370922,
+      "training_reused": false,
+      "fingerprint": "d090b5e7ae3d1aed8c7524ad4c923bfa4a6810e30274963b87b9301729c1317c"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 456,
+      "condition": "B2",
+      "device": "mps",
+      "macro_f1": 0.803703539370922,
+      "training_reused": true,
+      "fingerprint": "d090b5e7ae3d1aed8c7524ad4c923bfa4a6810e30274963b87b9301729c1317c"
+    },
+    {
+      "setting": "low_resource",
+      "seed": 456,
+      "condition": "B3",
+      "device": "mps",
+      "macro_f1": 0.8010249738011335,
+      "training_reused": false,
+      "fingerprint": "a928233c9adeaa2870fed72cb33ad170a391f5f23b97456ee80b91589ca30163"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 42,
+      "condition": "B1",
+      "device": "mps",
+      "macro_f1": 0.8199919960351839,
+      "training_reused": false,
+      "fingerprint": "fc1b0997c6c81028243402e9ea1045c0758b8cc67dcba02d0cbb3c4a331a0414"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 42,
+      "condition": "B2",
+      "device": "mps",
+      "macro_f1": 0.7996780255883447,
+      "training_reused": false,
+      "fingerprint": "17caf5dc24901acbcb056bcbb15a979f2efb9dc22e6ff2476eff85ac0c36ab8c"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 42,
+      "condition": "B3",
+      "device": "mps",
+      "macro_f1": 0.8345860588437328,
+      "training_reused": false,
+      "fingerprint": "71ee868da128edea5d0ea182f40b23ab576ad54497f8fb3f717de288b5f5d9ba"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 123,
+      "condition": "B1",
+      "device": "mps",
+      "macro_f1": 0.8069780898268065,
+      "training_reused": false,
+      "fingerprint": "6f17d060bfe623c9ea00a8968075e10ad81f04b84a957d9588ca058a18fe7e96"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 123,
+      "condition": "B2",
+      "device": "mps",
+      "macro_f1": 0.7947773934040461,
+      "training_reused": false,
+      "fingerprint": "3804c7259b1015975503b7331b13609c517a044e7b4a1fbfdb1fe936d9d1b70b"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 123,
+      "condition": "B3",
+      "device": "mps",
+      "macro_f1": 0.8098069589871111,
+      "training_reused": false,
+      "fingerprint": "5c592609bc8930628dae469fcabfebe98af85293ac10d6489c97296de75ed688"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 456,
+      "condition": "B1",
+      "device": "mps",
+      "macro_f1": 0.8199102034154242,
+      "training_reused": false,
+      "fingerprint": "5cde084a91b2da063f504ff238df7c019eba68ba47ea00d5db24d338ad20905b"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 456,
+      "condition": "B2",
+      "device": "mps",
+      "macro_f1": 0.8135674248010424,
+      "training_reused": false,
+      "fingerprint": "bb6412d670c5b85bbe2deb2e39a5c0c5d9cc6b9b9aa63c48382893fbc3fc97af"
+    },
+    {
+      "setting": "imbalanced",
+      "seed": 456,
+      "condition": "B3",
+      "device": "mps",
+      "macro_f1": 0.8246582993967759,
+      "training_reused": false,
+      "fingerprint": "aff11d3289c6266f73af29ea1433201a5a9e70be56ad7263603ee58077a88799"
+    }
+  ]
+}

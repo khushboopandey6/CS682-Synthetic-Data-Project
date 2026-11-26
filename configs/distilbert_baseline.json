@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "search_plan": {
+    "schema_version": 1,
+    "model_id": "distilbert/distilbert-base-uncased",
+    "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+    "seed": 42,
+    "settings": [
+      "low_resource",
+      "imbalanced"
+    ],
+    "learning_rates": [
+      2e-05,
+      5e-05,
+      0.0001
+    ],
+    "max_epochs": 30,
+    "patience": 5,
+    "fixed_training_parameters": {
+      "weight_decay": 0.01,
+      "batch_size": 16,
+      "eval_batch_size": 32,
+      "max_length": 128,
+      "warmup_ratio": 0.1,
+      "max_grad_norm": 1.0
+    },
+    "data_manifest_sha256": "7578614aeb27d11b8a84839e656ac40b76d30e65324acb6ee404b986d8cf6022",
+    "validation_sha256": "c19fcabf3e493cec412d5ad230bb45880534dbba887557a47c39c15408f0eee6",
+    "selection_metric": "equal-weight mean of the two settings' best validation macro-F1",
+    "tie_policy": "choose the lower learning rate within 0.001 macro-F1 of the maximum mean",
+    "duration_comparison": "first 10 epochs versus full curve under the same 30-epoch decay schedule",
+    "official_test_used": false
+  },
+  "search_plan_sha256": "240355504d3600d136bc3b23a745fbd6e3c08e0dfbcae7ec331efe2b6809daa7",
+  "data_manifest_sha256": "7578614aeb27d11b8a84839e656ac40b76d30e65324acb6ee404b986d8cf6022",
+  "model_id": "distilbert/distilbert-base-uncased",
+  "model_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "training_config": {
+    "weight_decay": 0.01,
+    "batch_size": 16,
+    "eval_batch_size": 32,
+    "max_length": 128,
+    "warmup_ratio": 0.1,
+    "max_grad_norm": 1.0,
+    "lr": 0.0001,
+    "max_epochs": 30,
+    "patience": 5
+  },
+  "selected_learning_rate": 0.0001,
+  "selected_mean_macro_f1": 0.7981268205077615,
+  "selected_trial_directories": {
+    "low_resource": "lr_1e-04/low_resource/B1/seed_42",
+    "imbalanced": "lr_1e-04/imbalanced/B1/seed_42"
+  },
+  "completed_trials": 6,
+  "total_tuning_seconds": 1998.5756423736457,
+  "development_scores_only": true,
+  "official_test_used": false,
+  "confirmation_policy": "Seeds 43 and 44 use these settings without further hyperparameter search.",
+  "cost_policy": "Report search compute separately and count reused selected B1 training only once."
+}

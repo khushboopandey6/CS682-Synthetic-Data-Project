@@ -1,0 +1,110 @@
+schema_version: 1
+protocol_id: master_v1
+status: frozen
+paths:
+  base_path: artifacts/CS682_Project
+dataset:
+  name: banking77
+  dataset_id: PolyAI/banking77
+  dataset_revision: 1846984189f2bc0ac51c6fc3a600fa9e1714e0c6
+  num_classes: 77
+  validation_per_class: 10
+  validation_seed: 42
+  sampling_algorithm: python_random_sample_source_class_encounter_order
+seeds:
+- 42
+- 123
+- 456
+settings:
+  low_resource:
+    samples_per_class: 10
+  imbalanced:
+    rare_class_seed: 42
+    rare_class_selection_algorithm: python_random_sample_sorted_label_ids
+    num_rare_classes: 15
+    rare_samples_per_class: 5
+    majority_samples_per_class: 20
+generation:
+  model: Qwen/Qwen2.5-1.5B-Instruct
+  few_shot_examples: 3
+  temperature: 0.7
+  top_p: 0.9
+  do_sample: true
+  raw_budget_per_class: 50
+  queries_per_prompt: 10
+  max_new_tokens: 512
+  max_attempts_per_class: 10
+filtering:
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2
+  duplicate_threshold: 0.95
+  confidence_threshold_candidates:
+  - 0.3
+  - 0.5
+  - 0.7
+  - 0.9
+  match_counts_per_class: true
+training:
+  model: distilbert/distilbert-base-uncased
+  num_labels: 77
+  model_revision: 12040accade4e8a0f71eabdb258fecc2e7e948be
+  full_fine_tuning: true
+  optimizer: adamw
+  learning_rate: 0.0001
+  batch_size: 16
+  eval_batch_size: 32
+  max_epochs: 30
+  validation_interval_epochs: 1
+  early_stopping_patience: 5
+  max_length: 128
+  weight_decay: 0.01
+  lr_scheduler: linear
+  warmup_ratio: 0.1
+  max_grad_norm: 1.0
+  precision: float32
+  device: auto
+  checkpoint_metric: macro_f1
+  restore_best_checkpoint: true
+classifier_pilot:
+  development_seed: 42
+  settings:
+  - low_resource
+  - imbalanced
+  conditions:
+  - B1
+  - B3
+  learning_rate_candidates:
+  - 2.0e-05
+  - 5.0e-05
+  - 0.0001
+  selection_metric: equal_weight_mean_best_validation_macro_f1
+  tie_policy: lower_learning_rate_on_exact_tie
+  selection:
+    learning_rate: 0.0001
+    mean_macro_f1: 0.7981071108956048
+    completed_fits: 12
+    minimum_macro_f1: 0.7652815521251083
+    planned_fits: 12
+    selection_metric: equal-weight mean best validation macro-F1 across B1/B3 and
+      both settings
+    tie_policy: lower learning rate on exact tie
+    official_test_used: false
+    data_manifest_sha256: ca50980ffc33a0c071827f31b68e113e9aea250eaefa2382a59b21d38495a11f
+    pilot_trials_sha256: d3e0cd6938d47eade54c340046933f2456b7a2f130ec52f1ccf99953ab465254
+    model_revision: 12040accade4e8a0f71eabdb258fecc2e7e948be
+    code_commit: 62e01eee7b4bbfb05eda9637669f42ad1d5ed3f5
+  frozen_at_utc: '2026-11-26T05:28:59.794624+00:00'
+baselines:
+  B2: random_oversampling
+  B3: easy_data_augmentation
+  eda_alpha: 0.1
+  eda_deletion_probability: 0.1
+  eda_augmentations_per_real: 1
+  eda_attempts_per_example: 16
+augmentation:
+  primary_ratio: 1.0
+  optional_ratios:
+  - 0.5
+  - 2.0
+evaluation:
+  primary_metric: macro_f1
+  human_audit_size: 200

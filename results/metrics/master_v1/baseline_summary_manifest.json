@@ -1,0 +1,37 @@
+{
+  "status": "complete",
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "standard_deviation": "sample (ddof=1)",
+  "score_groups": 12,
+  "independent_main_fits": 15,
+  "balanced_B2_reuses": 3,
+  "inputs_sha256": {
+    "baseline_validation_results.csv": "cb7be04d6a4d99ee775911677398411516d717d93703e49e6a51329f8133194a",
+    "baseline_validation_audit.json": "5da00802fe9c92ce2fc3cf570e16a6e4fcac6753125cfc3aff085e1197468976",
+    "baseline_test_results.csv": "0e5b5f5bfc6b1f9f919a3e839a5c84e0fecfc16a073cec9abb4aeccae6556054",
+    "baseline_test_audit.json": "afef74b5415b4d4485e779783464c2202a86fa051b024aa835b53a3ea02e2fbf",
+    "05_results/metrics/B1/low_resource/seed_42.json": "c137044b5421cac30c4596931945f3f006058daf29a2bed1ac46598ea98cf682",
+    "05_results/metrics/B1/low_resource/seed_123.json": "d5f6dceb4622fded255d8ec836200aabe79a27bda9ee41a4bccf5efa7a297d23",
+    "05_results/metrics/B1/low_resource/seed_456.json": "622d47badd3326982ac838211c8ccffe3dd0428136d13d14c4b64fac573b5ee5",
+    "05_results/metrics/B2/low_resource/seed_42.json": "94953b9657e775e48384ed4598d0a2927308dab692305c91daf5f7b0170dd3b3",
+    "05_results/metrics/B2/low_resource/seed_123.json": "ca84a2f6256df9fa075d8af8d986a414cbe6515c3bd45bba7f7733e65d9a6544",
+    "05_results/metrics/B2/low_resource/seed_456.json": "4de705974babf7bad23689c9ae26c3db77e30f20915b2344671e15b0a9c707c1",
+    "05_results/metrics/B3/low_resource/seed_42.json": "9843b851b6077e8b8bf727119ec5019b8a825ec603bc62c436bc14a3fc091e82",
+    "05_results/metrics/B3/low_resource/seed_123.json": "f734a2297dc71be8568a65bba4794e4e008fabf523b534e9038b5280a4e1ccf8",
+    "05_results/metrics/B3/low_resource/seed_456.json": "cfc95955f770c2ef09dc397e50bbc1584cdeb8597a5684a1d4c5c42c1fd4118f",
+    "05_results/metrics/B1/imbalanced/seed_42.json": "d3014f1f897f93424799a8e6ce33e163ca95d3f8ffcf6b4d118707d42483ac8d",
+    "05_results/metrics/B1/imbalanced/seed_123.json": "4239d1239986953b0801738f417a83922a0890ee7c7b2f367df11ef956a8691f",
+    "05_results/metrics/B1/imbalanced/seed_456.json": "ba26402729f789fb3d470300324222f739b774aa1b5e8f844c2b81789ed286f3",
+    "05_results/metrics/B2/imbalanced/seed_42.json": "b851b9fd458bb68359082431da13a5095397948df1f591e2eb7abc72b52e96b0",
+    "05_results/metrics/B2/imbalanced/seed_123.json": "3c7042a606bf27bc7d4fa07c923a4f64a4ad670caf016ae1e25a6945af4bcf2e",
+    "05_results/metrics/B2/imbalanced/seed_456.json": "d6c1495f883f03082e192438aa752f6d0fb2ce871143019f67c47a03464da443",
+    "05_results/metrics/B3/imbalanced/seed_42.json": "d358df5c603337031e8db64f2822c7d9824b19300a28665b6f744f92433866e8",
+    "05_results/metrics/B3/imbalanced/seed_123.json": "9906163265589fd33ecae4bf48360b4d1f071a05076c73bfe6f121cbeecac5ab",
+    "05_results/metrics/B3/imbalanced/seed_456.json": "7a572b9fdfedcba2dddcdef4b36999fbcc14caab9da85f617ca161855665c11e"
+  },
+  "frozen_config_sha256": "e5e69a67dd9f5d151b01aa4a569f90bd161fbec8908c0a318916539bf1f00ede"
+}

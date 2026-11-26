@@ -1,0 +1,16 @@
+# Prepared datasets and downloaded model caches
+data/reproducible/
+artifacts/
+
+# Trained weights, augmentation caches, and detailed run artifacts
+results/baselines/
+
+# Parked planning drafts, preserved locally while the plan is set aside
+docs/drafts/PROJECT_EXECUTION_PLAN.md
+docs/drafts/PROJECT_EXECUTION_PLAN.docx
+
+# Generated editor and Python files
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+.DS_Store
