@@ -108,6 +108,14 @@ from the local `artifacts/CS682_Project/` folder into the team's shared
 `CS682_BASE_PATH`, or `paths.base_path` can point code at that restored root.
 The shared Drive location and recipient access have not yet been verified.
 
+The team Drive folder shown is named **CS682_Neural_Project**. Upload the
+prepared release's contents into that shared root alongside the existing older
+`data/` folder. The code reads the official `01_data/` directory. In the first
+setup cell of both active notebooks, set `BASE_PATH_OVERRIDE` to this root's
+actual mounted path, for example `/content/drive/MyDrive/CS682_Neural_Project`
+if that is where it appears after mounting. Do not include `/01_data` in the
+override. See [Colab setup](../README.md#colab-setup-for-teammates) for the checks.
+
 | Relative path under `CS682_Project/` | Contents / transfer purpose |
 |---|---|
 | `01_data/` | All real splits, B2/B3 JSONL, preparation reports, label mapping, rare IDs, statistics and manifest |

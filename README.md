@@ -95,6 +95,37 @@ Low-resource seed-42 B1/B3 were completed on CPU and retained. The other 13 main
 fits and all test evaluations used MPS. Actual hardware is recorded per run.
 Colab setup is supported, but an actual CUDA execution check has not been completed.
 
+## Colab setup for teammates
+
+In both active notebooks, set `BASE_PATH_OVERRIDE` in the first setup cell to
+the actual mounted location of the team's **CS682_Neural_Project** folder.
+For example, if it appears directly under the mounted MyDrive:
+
+```python
+BASE_PATH_OVERRIDE = "/content/drive/MyDrive/CS682_Neural_Project" if IN_COLAB else None
+```
+
+This points to the parent of `01_data`, not to `01_data` itself. The setup cell
+already mounts Drive. Locate the folder in Colab's file browser and adjust the
+example if its mounted path differs. After the artifact upload and notebook
+setup, check:
+
+```python
+from src.training import select_device
+
+assert (BASE_PATH / "01_data/manifest.json").is_file()
+print("Artifact root:", BASE_PATH)
+print("Selected device:", select_device(config["training"]["device"]))
+```
+
+Enable a GPU runtime before running classifier experiments; the general Python
+trainer selects CUDA, then MPS, then CPU. The plan's logical artifact root is
+called `CS682_Project`; the actual shared folder may instead be named
+`CS682_Neural_Project`. Preserve its internal `01_data/`, `04_checkpoints/`,
+`05_results/`, `06_cost_logs/` and `handoff/` paths. CLI users can supply the same
+root with `--base-path` or `CS682_BASE_PATH`. Changing this location does not
+require editing the frozen scientific configuration.
+
 ## Reproduce or verify
 
 Install [requirements.txt](requirements.txt) in the chosen Python environment.
